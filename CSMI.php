@@ -4,7 +4,7 @@ defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 Plugin Name:    Country Specific Menu Items
 Description:    Control the visibility of individual menu items based on a user's country.
 Author:         Ryan Stutzman
-Version:        1.0.2
+Version:        1.0.3
 Author URI:     http://stutzman.asia/
 */
 
@@ -123,10 +123,10 @@ function csmi_geoip_update() {
 	}
 }
 
-add_action('init','csmi_start_session');
-function csmi_start_session() {
-    if(!session_id()) {
-        session_start();
+add_action( 'init', 'csmi_start_session' );
+function csmi_start_session( ) {
+    if( !session_id( ) ) {
+        session_start( );
     }
 }
 
@@ -169,6 +169,7 @@ class Country_Specific_Menu_Items {
 
 /* Show settings for each menu item in Menus admin page. */
 	function csmi_settings( $fields, $item_id ) {
+		require( dirname( __FILE__ ) . '/includes/countries.php' );
 	    ob_start(); ?>
 			<p class="field-visibility description description-wide">
 				<label for="edit-menu-item-visibility-<?php echo $item_id; ?>">
@@ -178,246 +179,15 @@ class Country_Specific_Menu_Items {
 					        $(".chzn-select").chosen();
 					    });
 					</script>
-					<select name="menu-item-visibility[<?php echo $item_id; ?>][]" id="edit-menu-item-visibility-<?php echo $item_id; ?>" class="chzn-select" multiple="true" data-placeholder="Select Countries">
-						<option value="AF" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "AF", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Afghanistan</option>
-						<option value="AL" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "AL", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Albania</option>
-						<option value="DZ" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "DZ", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Algeria</option>
-						<option value="AS" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "AS", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >American Samoa</option>
-						<option value="AD" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "AD", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Andorra</option>
-						<option value="AO" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "AO", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Angola</option>
-						<option value="AI" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "AI", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Anguilla</option>
-						<option value="AQ" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "AQ", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Antarctica</option>
-						<option value="AG" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "AG", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Antigua and Barbuda</option>
-						<option value="AR" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "AR", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Argentina</option>
-						<option value="AM" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "AM", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Armenia</option>
-						<option value="AW" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "AW", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Aruba</option>
-						<option value="AU" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "AU", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Australia</option>
-						<option value="AT" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "AT", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Austria</option>
-						<option value="AZ" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "AZ", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Azerbaijan</option>
-						<option value="BS" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "BS", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Bahamas</option>
-						<option value="BH" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "BH", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Bahrain</option>
-						<option value="BD" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "BD", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Bangladesh</option>
-						<option value="BB" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "BB", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Barbados</option>
-						<option value="BY" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "BY", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Belarus</option>
-						<option value="BE" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "BE", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Belgium</option>
-						<option value="BZ" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "BZ", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Belize</option>
-						<option value="BJ" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "BJ", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Benin</option>
-						<option value="BM" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "BM", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Bermuda</option>
-						<option value="BT" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "BT", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Bhutan</option>
-						<option value="BO" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "BO", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Bolivia</option>
-						<option value="BA" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "BA", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Bosnia and Herzegowina</option>
-						<option value="BW" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "BW", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Botswana</option>
-						<option value="BV" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "BV", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Bouvet Island</option>
-						<option value="BR" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "BR", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Brazil</option>
-						<option value="IO" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "IO", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >British Indian Ocean Territory</option>
-						<option value="BN" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "BN", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Brunei Darussalam</option>
-						<option value="BG" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "BG", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Bulgaria</option>
-						<option value="BF" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "BF", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Burkina Faso</option>
-						<option value="BI" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "BI", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Burundi</option>
-						<option value="KH" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "KH", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Cambodia</option>
-						<option value="CM" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "CM", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Cameroon</option>
-						<option value="CA" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "CA", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Canada</option>
-						<option value="CV" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "CV", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Cape Verde</option>
-						<option value="KY" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "KY", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Cayman Islands</option>
-						<option value="CF" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "CF", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Central African Republic</option>
-						<option value="TD" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "TD", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Chad</option>
-						<option value="CL" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "CL", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Chile</option>
-						<option value="CN" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "CN", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >China</option>
-						<option value="CX" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "CX", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Christmas Island</option>
-						<option value="CC" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "CC", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Cocos (Keeling) Islands</option>
-						<option value="CO" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "CO", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Colombia</option>
-						<option value="KM" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "KM", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Comoros</option>
-						<option value="CG" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "CG", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Congo</option>
-						<option value="CD" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "CD", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Congo, the Democratic Republic of the</option>
-						<option value="CK" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "CK", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Cook Islands</option>
-						<option value="CR" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "CR", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Costa Rica</option>
-						<option value="CI" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "CI", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Cote d'Ivoire</option>
-						<option value="HR" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "HR", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Croatia (Hrvatska)</option>
-						<option value="CU" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "CU", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Cuba</option>
-						<option value="CY" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "CY", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Cyprus</option>
-						<option value="CZ" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "CZ", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Czech Republic</option>
-						<option value="DK" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "DK", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Denmark</option>
-						<option value="DJ" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "DJ", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Djibouti</option>
-						<option value="DM" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "DM", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Dominica</option>
-						<option value="DO" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "DO", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Dominican Republic</option>
-						<option value="TP" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "TP", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >East Timor</option>
-						<option value="EC" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "EC", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Ecuador</option>
-						<option value="EG" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "EG", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Egypt</option>
-						<option value="SV" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "SV", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >El Salvador</option>
-						<option value="GQ" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "GQ", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Equatorial Guinea</option>
-						<option value="ER" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "ER", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Eritrea</option>
-						<option value="EE" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "EE", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Estonia</option>
-						<option value="ET" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "ET", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Ethiopia</option>
-						<option value="FK" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "FK", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Falkland Islands (Malvinas)</option>
-						<option value="FO" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "FO", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Faroe Islands</option>
-						<option value="FJ" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "FJ", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Fiji</option>
-						<option value="FI" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "FI", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Finland</option>
-						<option value="FR" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "FR", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >France</option>
-						<option value="FX" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "FX", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >France, Metropolitan</option>
-						<option value="GF" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "GF", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >French Guiana</option>
-						<option value="PF" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "PF", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >French Polynesia</option>
-						<option value="TF" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "TF", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >French Southern Territories</option>
-						<option value="GA" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "GA", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Gabon</option>
-						<option value="GM" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "GM", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Gambia</option>
-						<option value="GE" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "GE", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Georgia</option>
-						<option value="DE" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "DE", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Germany</option>
-						<option value="GH" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "GH", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Ghana</option>
-						<option value="GI" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "GI", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Gibraltar</option>
-						<option value="GR" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "GR", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Greece</option>
-						<option value="GL" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "GL", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Greenland</option>
-						<option value="GD" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "GD", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Grenada</option>
-						<option value="GP" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "GP", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Guadeloupe</option>
-						<option value="GU" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "GU", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Guam</option>
-						<option value="GT" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "GT", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Guatemala</option>
-						<option value="GN" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "GN", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Guinea</option>
-						<option value="GW" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "GW", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Guinea-Bissau</option>
-						<option value="GY" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "GY", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Guyana</option>
-						<option value="HT" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "HT", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Haiti</option>
-						<option value="HM" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "HM", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Heard and Mc Donald Islands</option>
-						<option value="VA" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "VA", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Holy See (Vatican City State)</option>
-						<option value="HN" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "HN", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Honduras</option>
-						<option value="HK" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "HK", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Hong Kong</option>
-						<option value="HU" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "HU", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Hungary</option>
-						<option value="IS" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "IS", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Iceland</option>
-						<option value="IN" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "IN", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >India</option>
-						<option value="ID" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "ID", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Indonesia</option>
-						<option value="IR" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "IR", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Iran (Islamic Republic of)</option>
-						<option value="IQ" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "IQ", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Iraq</option>
-						<option value="IE" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "IE", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Ireland</option>
-						<option value="IL" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "IL", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Israel</option>
-						<option value="IT" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "IT", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Italy</option>
-						<option value="JM" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "JM", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Jamaica</option>
-						<option value="JP" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "JP", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Japan</option>
-						<option value="JO" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "JO", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Jordan</option>
-						<option value="KZ" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "KZ", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Kazakhstan</option>
-						<option value="KE" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "KE", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Kenya</option>
-						<option value="KI" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "KI", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Kiribati</option>
-						<option value="KP" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "KP", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Korea, Democratic People's Republic of</option>
-						<option value="KR" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "KR", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Korea, Republic of</option>
-						<option value="KW" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "KW", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Kuwait</option>
-						<option value="KG" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "KG", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Kyrgyzstan</option>
-						<option value="LA" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "LA", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Lao People's Democratic Republic</option>
-						<option value="LV" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "LV", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Latvia</option>
-						<option value="LB" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "LB", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Lebanon</option>
-						<option value="LS" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "LS", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Lesotho</option>
-						<option value="LR" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "LR", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Liberia</option>
-						<option value="LY" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "LY", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Libyan Arab Jamahiriya</option>
-						<option value="LI" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "LI", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Liechtenstein</option>
-						<option value="LT" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "LT", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Lithuania</option>
-						<option value="LU" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "LU", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Luxembourg</option>
-						<option value="MO" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "MO", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Macau</option>
-						<option value="MK" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "MK", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Macedonia, The Former Yugoslav Republic of</option>
-						<option value="MG" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "MG", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Madagascar</option>
-						<option value="MW" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "MW", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Malawi</option>
-						<option value="MY" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "MY", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Malaysia</option>
-						<option value="MV" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "MV", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Maldives</option>
-						<option value="ML" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "ML", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Mali</option>
-						<option value="MT" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "MT", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Malta</option>
-						<option value="MH" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "MH", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Marshall Islands</option>
-						<option value="MQ" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "MQ", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Martinique</option>
-						<option value="MR" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "MR", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Mauritania</option>
-						<option value="MU" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "MU", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Mauritius</option>
-						<option value="YT" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "YT", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Mayotte</option>
-						<option value="MX" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "MX", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Mexico</option>
-						<option value="FM" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "FM", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Micronesia, Federated States of</option>
-						<option value="MD" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "MD", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Moldova, Republic of</option>
-						<option value="MC" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "MC", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Monaco</option>
-						<option value="MN" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "MN", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Mongolia</option>
-						<option value="MS" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "MS", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Montserrat</option>
-						<option value="MA" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "MA", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Morocco</option>
-						<option value="MZ" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "MZ", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Mozambique</option>
-						<option value="MM" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "MM", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Myanmar</option>
-						<option value="NA" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "NA", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Namibia</option>
-						<option value="NR" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "NR", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Nauru</option>
-						<option value="NP" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "NP", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Nepal</option>
-						<option value="NL" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "NL", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Netherlands</option>
-						<option value="AN" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "AN", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Netherlands Antilles</option>
-						<option value="NC" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "NC", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >New Caledonia</option>
-						<option value="NZ" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "NZ", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >New Zealand</option>
-						<option value="NI" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "NI", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Nicaragua</option>
-						<option value="NE" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "NE", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Niger</option>
-						<option value="NG" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "NG", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Nigeria</option>
-						<option value="NU" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "NU", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Niue</option>
-						<option value="NF" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "NF", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Norfolk Island</option>
-						<option value="MP" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "MP", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Northern Mariana Islands</option>
-						<option value="NO" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "NO", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Norway</option>
-						<option value="OM" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "OM", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Oman</option>
-						<option value="PK" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "PK", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Pakistan</option>
-						<option value="PW" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "PW", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Palau</option>
-						<option value="PA" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "PA", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Panama</option>
-						<option value="PG" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "PG", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Papua New Guinea</option>
-						<option value="PY" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "PY", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Paraguay</option>
-						<option value="PE" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "PE", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Peru</option>
-						<option value="PH" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "PH", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Philippines</option>
-						<option value="PN" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "PN", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Pitcairn</option>
-						<option value="PL" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "PL", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Poland</option>
-						<option value="PT" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "PT", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Portugal</option>
-						<option value="PR" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "PR", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Puerto Rico</option>
-						<option value="QA" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "QA", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Qatar</option>
-						<option value="RE" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "RE", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Reunion</option>
-						<option value="RO" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "RO", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Romania</option>
-						<option value="RU" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "RU", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Russian Federation</option>
-						<option value="RW" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "RW", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Rwanda</option>
-						<option value="KN" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "KN", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Saint Kitts and Nevis </option>
-						<option value="LC" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "LC", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Saint LUCIA</option>
-						<option value="VC" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "VC", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Saint Vincent and the Grenadines</option>
-						<option value="WS" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "WS", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Samoa</option>
-						<option value="SM" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "SM", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >San Marino</option>
-						<option value="ST" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "ST", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Sao Tome and Principe </option>
-						<option value="SA" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "SA", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Saudi Arabia</option>
-						<option value="SN" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "SN", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Senegal</option>
-						<option value="SC" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "SC", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Seychelles</option>
-						<option value="SL" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "SL", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Sierra Leone</option>
-						<option value="SG" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "SG", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Singapore</option>
-						<option value="SK" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "SK", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Slovakia (Slovak Republic)</option>
-						<option value="SI" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "SI", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Slovenia</option>
-						<option value="SB" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "SB", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Solomon Islands</option>
-						<option value="SO" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "SO", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Somalia</option>
-						<option value="ZA" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "ZA", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >South Africa</option>
-						<option value="GS" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "GS", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >South Georgia and the South Sandwich Islands</option>
-						<option value="ES" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "ES", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Spain</option>
-						<option value="LK" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "LK", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Sri Lanka</option>
-						<option value="SH" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "SH", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >St. Helena</option>
-						<option value="PM" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "PM", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >St. Pierre and Miquelon</option>
-						<option value="SD" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "SD", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Sudan</option>
-						<option value="SR" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "SR", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Suriname</option>
-						<option value="SJ" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "SJ", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Svalbard and Jan Mayen Islands</option>
-						<option value="SZ" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "SZ", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Swaziland</option>
-						<option value="SE" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "SE", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Sweden</option>
-						<option value="CH" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "CH", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Switzerland</option>
-						<option value="SY" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "SY", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Syrian Arab Republic</option>
-						<option value="TW" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "TW", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Taiwan, Province of China</option>
-						<option value="TJ" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "TJ", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Tajikistan</option>
-						<option value="TZ" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "TZ", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Tanzania, United Republic of</option>
-						<option value="TH" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "TH", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Thailand</option>
-						<option value="TG" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "TG", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Togo</option>
-						<option value="TK" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "TK", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Tokelau</option>
-						<option value="TO" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "TO", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Tonga</option>
-						<option value="TT" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "TT", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Trinidad and Tobago</option>
-						<option value="TN" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "TN", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Tunisia</option>
-						<option value="TR" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "TR", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Turkey</option>
-						<option value="TM" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "TM", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Turkmenistan</option>
-						<option value="TC" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "TC", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Turks and Caicos Islands</option>
-						<option value="TV" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "TV", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Tuvalu</option>
-						<option value="UG" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "UG", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Uganda</option>
-						<option value="UA" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "UA", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Ukraine</option>
-						<option value="AE" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "AE", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >United Arab Emirates</option>
-						<option value="GB" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "GB", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >United Kingdom</option>
-						<option value="US" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "US", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >United States</option>
-						<option value="UM" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "UM", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >United States Minor Outlying Islands</option>
-						<option value="UY" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "UY", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Uruguay</option>
-						<option value="UZ" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "UZ", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Uzbekistan</option>
-						<option value="VU" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "VU", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Vanuatu</option>
-						<option value="VE" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "VE", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Venezuela</option>
-						<option value="VN" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "VN", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Viet Nam</option>
-						<option value="VG" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "VG", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Virgin Islands (British)</option>
-						<option value="VI" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "VI", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Virgin Islands (U.S.)</option>
-						<option value="WF" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "WF", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Wallis and Futuna Islands</option>
-						<option value="EH" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "EH", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Western Sahara</option>
-						<option value="YE" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "YE", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Yemen</option>
-						<option value="YU" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "YU", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Yugoslavia</option>
-						<option value="ZM" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "ZM", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Zambia</option>
-						<option value="ZW" <?php $val = get_post_meta( $item_id, 'locations', true ); if ( is_array( $val ) ) { if ( in_array( "ZW", $val ) ) { echo "selected='selected'"; } else { echo ""; } } ?> >Zimbabwe</option>
+					<select name="menu-item-visibility[<?php echo $item_id; ?>][]" id="edit-menu-item-visibility-<?php echo $item_id; ?>" class="chzn-select" multiple="true">
+					<?php
+					$vals = get_post_meta( $item_id, 'locations', true );
+					foreach($countries as $key => $value) { 
+					?>
+						<option value="<?php echo $key;?>"<?php echo (is_array( $vals ) && in_array( $key, $vals ) ) ? "selected='selected'" : ''; ?>> <?php echo $value;?> </option>
+					<?php
+					}
+					?>
 					</select>
 			</p>
 			<p class="field-visibility description description-wide">
@@ -443,15 +213,14 @@ class Country_Specific_Menu_Items {
 /* Put locations in the database. */
 	function csmi_update_locations( $menu_id, $menu_item_db_id, $args ) {
 		$meta_value = get_post_meta( $menu_item_db_id, 'locations', true );
-		if ( isset( $_POST[ 'menu-item-visibility' ][ $menu_item_db_id ] ) ) { 
-			$new_meta_value = $_POST[ 'menu-item-visibility' ][ $menu_item_db_id ]; 
-			if ( !isset( $new_meta_value ) ) {
-				delete_post_meta( $menu_item_db_id, 'locations', $meta_value );
+		if ( isset( $_POST['menu-item-visibility'][$menu_item_db_id] ) ) { 
+			$new_meta_value = $_POST['menu-item-visibility'][$menu_item_db_id]; }
+			if ( !isset($new_meta_value ) ) {
+			delete_post_meta( $menu_item_db_id, 'locations', $meta_value );
 			}
 			elseif ( $meta_value !== $new_meta_value ) {
 				update_post_meta( $menu_item_db_id, 'locations', $new_meta_value );
 			}
-		}
 	}
 
 /* Put visibility settings in the database. */

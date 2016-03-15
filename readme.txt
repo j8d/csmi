@@ -5,7 +5,7 @@ Plugin Name: Country Specific Menu Items
 Tags: menu, nav-menu, navigation, navigation menu, geoip, location, country, menu items
 Requires at least: 3.1
 Tested up to: 4.4.2
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,4 +45,7 @@ Country Specific Menu Items* allows you to either hide or show individual menu i
 * Fixed problem with conflicting CSS from other plugins
 
 = 1.0.2 =
-* Changed plugin name from `Location Specific Menu Items by Country` to `Country Specific Menu Items`. I was originally planning to add different types of locations (city, state, continent, etc.) to this plugin and then remove the `by Country`, but have decided instead to just create a completely new plugin for each type of location.
+* Changed plugin name from `Location Specific Menu Items by Country` to `Country Specific Menu Items`. I was originally planning to add different types of locations (city, state, continent, etc.) to this plugin and then remove the `by Country`, but have decided instead to just create a completely new plugin for each type of location. 
+
+= 1.0.3 =
+* Move list of countries into an array in a seperate file. 
