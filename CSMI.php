@@ -12,9 +12,9 @@ Author URI:     http://stutzman.asia/
 add_action( 'admin_notices', 'csmi_admin_notice' );
 add_action( 'network_admin_notices', 'csmi_admin_notice' ); // also show message on multisite
 function csmi_admin_notice() {
-	if ( class_exists ( 'City_Specific_Menu_Items' ) ){
+	if ( class_exists ( 'City_Specific_Menu_Items' ) ) {
 		global $pagenow;
-		if ( $pagenow == 'plugins.php' ){
+		if ( $pagenow == 'plugins.php' ) {
 			deactivate_plugins ( 'location-specific-menu-items-by-country/CSMI.php' );
 			if ( current_user_can( 'install_plugins' ) ) {
 				echo '<div id="error" class="error notice is-dismissible"><p>Error. Please deactivate Country Specific Menu Items first and try again.</div>';
@@ -184,7 +184,7 @@ class Country_Specific_Menu_Items {
 					$vals = get_post_meta( $item_id, 'locations', true );
 					foreach($countries as $key => $value) { 
 					?>
-						<option value="<?php echo $key;?>"<?php echo (is_array( $vals ) && in_array( $key, $vals ) ) ? "selected='selected'" : ''; ?>> <?php echo $value;?> </option>
+						<option value="<?php echo $key;?>"<?php echo is_array( $vals ) && in_array( $key, $vals ) ? "selected='selected'" : ''; ?>> <?php echo $value;?> </option>
 					<?php
 					}
 					?>
@@ -213,14 +213,15 @@ class Country_Specific_Menu_Items {
 /* Put locations in the database. */
 	function csmi_update_locations( $menu_id, $menu_item_db_id, $args ) {
 		$meta_value = get_post_meta( $menu_item_db_id, 'locations', true );
-		if ( isset( $_POST['menu-item-visibility'][$menu_item_db_id] ) ) { 
-			$new_meta_value = $_POST['menu-item-visibility'][$menu_item_db_id]; }
-			if ( !isset($new_meta_value ) ) {
-			delete_post_meta( $menu_item_db_id, 'locations', $meta_value );
-			}
-			elseif ( $meta_value !== $new_meta_value ) {
-				update_post_meta( $menu_item_db_id, 'locations', $new_meta_value );
-			}
+		if ( isset( $_POST[ 'menu-item-visibility' ][ $menu_item_db_id ] ) ) { 
+			$new_meta_value = $_POST[ 'menu-item-visibility' ][ $menu_item_db_id ];
+		}
+		if ( !isset($new_meta_value ) ) {
+		delete_post_meta( $menu_item_db_id, 'locations', $meta_value );
+		}
+		elseif ( $meta_value !== $new_meta_value ) {
+			update_post_meta( $menu_item_db_id, 'locations', $new_meta_value );
+		}
 	}
 
 /* Put visibility settings in the database. */
@@ -228,12 +229,9 @@ class Country_Specific_Menu_Items {
 		$meta_value = get_post_meta( $menu_item_db_id, 'hide_show', true );
 		if ( isset( $_POST[ 'menu-item-show-hide' ][ $menu_item_db_id ] ) ) {
 			$new_meta_value = $_POST[ 'menu-item-show-hide' ][ $menu_item_db_id ];
-			if ( '' == $new_meta_value ) {
-				delete_post_meta( $menu_item_db_id, 'hide_show', $meta_value );
-			}
-			elseif ( $meta_value !== $new_meta_value ) {
-				update_post_meta( $menu_item_db_id, 'hide_show', $new_meta_value );
-			}
+		}
+		if ( $meta_value !== $new_meta_value ) {
+			update_post_meta( $menu_item_db_id, 'hide_show', $new_meta_value );
 		}
 	}
 
@@ -255,7 +253,7 @@ class Country_Specific_Menu_Items {
 				$ip_address = $_SERVER[ "HTTP_X_FORWARDED_FOR" ];
 			}
 			if ( !filter_var( $ip_address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 ) === FALSE ) { 	
-				if ( is_readable ( $GeoIPv4_file ) ) {
+				if ( is_readable( $GeoIPv4_file ) ) {
 					$gi = \CSMIGeoIP\geoip_open( $GeoIPv4_file, GEOIP_STANDARD );
 					$user_country = \CSMIGeoIP\geoip_country_code_by_addr( $gi, $ip_address );
 					\CSMIGeoIP\geoip_close( $gi );
@@ -268,7 +266,7 @@ class Country_Specific_Menu_Items {
 					}
 				}
 			} elseif ( !filter_var( $ip_address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6 ) === FALSE ) {
-				if ( is_readable ( $GeoIPv6_file ) ) {
+				if ( is_readable( $GeoIPv6_file ) ) {
 					$gi = \CSMIGeoIP\geoip_open( $GeoIPv6_file, GEOIP_STANDARD );
 					$user_country = \CSMIGeoIP\geoip_country_code_by_addr_v6( $gi, $ip_address );
 					\CSMIGeoIP\geoip_close( $gi );
@@ -309,7 +307,7 @@ class Country_Specific_Menu_Items {
 				else {
 					$visible = true;
 				}
-				if ( !$visible || isset( $hidden_items[$item_parent] ) ) { // also hide the children of hidden items
+				if ( !$visible || isset( $hidden_items[ $item_parent ] ) ) { // also hide the children of hidden items
 					unset( $items[ $key ] );
 					$hidden_items[ $item->ID ] = '1';	
 				}
