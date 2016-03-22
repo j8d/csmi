@@ -17,7 +17,7 @@ function csmi_admin_notice() {
 		if ( $pagenow == 'plugins.php' ) {
 			deactivate_plugins ( 'location-specific-menu-items-by-country/CSMI.php' );
 			if ( current_user_can( 'install_plugins' ) ) {
-				echo '<div id="error" class="error notice is-dismissible"><p>Error. Please deactivate Country Specific Menu Items first and try again.</div>';
+				echo '<div id="error" class="error notice is-dismissible"><p>Error! Please deactivate Country Specific Menu Items first and try again.</div>';
 			}
 		}
 	}
