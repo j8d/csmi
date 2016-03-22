@@ -5,7 +5,7 @@ Plugin Name:    Country Specific Menu Items
 Description:    Control the visibility of individual menu items based on a user's country.
 Author:         Ryan Stutzman
 Version:        1.0.3
-Author URI:     http://stutzman.asia/
+Author URI:     http://stutzman.tech/
 */
 
 /* Prevent plugin activation and send a notice if other SMI plugin is active. */
@@ -40,13 +40,13 @@ function csmi_dl_admin_notice() {
 		if ( current_user_can( 'install_plugins' ) ) {
 			?>
 			<script type="text/javascript">
-			jQuery(document).ready(function($){
+			jQuery(document).ready(function($) {
 			    $("#download").click(
 			        function () {
 			            $('#download-div').html("<p><img src='<?php echo plugin_dir_url( __FILE__ ) . 'assets/resources/spinner.gif';?>' alt='Please Wait...'/></p><p>Please wait while the Geolite database files download. Typically takes 10-15 seconds.</p>");
 			        }
 			    );
-			 });
+			});
 			</script>
 			<?php echo
 			'<div class="notice notice-warning is-dismissible" id="download-div"><p>Important: The CSMI plugin uses Maxmind Geolite databases for better speed and accuracy. Click "Download" to install these files now.</p>
@@ -54,7 +54,7 @@ function csmi_dl_admin_notice() {
 			<input type="submit" class="button" id="download" name="download" value="Download" />
 			<input type="submit" id="ignore" name="ignore" value="ignore" style="border: 0; background-color: transparent; color: grey; font-size: x-small; vertical-align: bottom; text-align: right;"/>
 			</p></div>';
-			if ($_GET){
+			if ($_GET) {
     			if ( isset( $_GET[ 'download' ] ) ) {
        				$newfilev4 = file_get_contents( "https://sourceforge.net/projects/geoipupdate/files/GeoIPv4.dat/download", 0, $ctx );
 					file_put_contents( $dir . '/GeoIPv4.dat', $newfilev4 );
@@ -124,9 +124,9 @@ function csmi_geoip_update() {
 }
 
 add_action( 'init', 'csmi_start_session' );
-function csmi_start_session( ) {
-    if( !session_id( ) ) {
-        session_start( );
+function csmi_start_session() {
+    if ( !session_id() ) {
+        session_start();
     }
 }
 
@@ -138,7 +138,7 @@ class Country_Specific_Menu_Items {
 	}
 
 	function __construct() {
-		if( is_admin() ) {
+		if ( is_admin() ) {
 			add_filter( 'wp_edit_nav_menu_walker', array( $this, 'csmi_edit_nav_menu_walker' ) );
 			add_filter( 'wp_nav_menu_item_custom_fields', array( $this, 'csmi_settings' ), 12, 2 );
 			add_action( 'wp_update_nav_menu_item', array( $this, 'csmi_update_locations' ), 10, 3 );
@@ -175,14 +175,14 @@ class Country_Specific_Menu_Items {
 				<label for="edit-menu-item-visibility-<?php echo $item_id; ?>">
 					<?php echo 'Set Visibility' ?>
 					<script type="text/javascript">
-					    jQuery(document).ready(function($){ 
+					    jQuery(document).ready(function($) { 
 					        $(".chzn-select").chosen();
 					    });
 					</script>
 					<select name="menu-item-visibility[<?php echo $item_id; ?>][]" id="edit-menu-item-visibility-<?php echo $item_id; ?>" class="chzn-select" multiple="true">
 					<?php
 					$vals = get_post_meta( $item_id, 'locations', true );
-					foreach($countries as $key => $value) { 
+					foreach( $countries as $key => $value ) { 
 					?>
 						<option value="<?php echo $key;?>"<?php echo is_array( $vals ) && in_array( $key, $vals ) ? "selected='selected'" : ''; ?>> <?php echo $value;?> </option>
 					<?php
@@ -237,8 +237,8 @@ class Country_Specific_Menu_Items {
 
 /* Get user's country code from his or her IP address. */
 	function csmi_get_country() {
-		if( isset( $_SESSION[ 'user_country' ] ) && !current_user_can( 'manage_options' ) ) {
-		    $user_country = $_SESSION[ 'user_country' ];
+		if ( isset( $_SESSION[ 'user_country' ] ) && !current_user_can( 'manage_options' ) ) {
+			$user_country = $_SESSION[ 'user_country' ];
 		} else {
 			$upload_dir = wp_upload_dir();
 			$dir = $upload_dir[ 'basedir' ] .'/geoip';
@@ -279,7 +279,7 @@ class Country_Specific_Menu_Items {
 					}
 				}
 			} else {
-				$user_country = "Can't locate IP: " . $ip_address;				
+				$user_country = "Can't locate IP: " . $ip_address;
 			}
 		}
 		$_SESSION['user_country'] = $user_country;
