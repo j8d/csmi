@@ -46,7 +46,7 @@ function csmi_dl_admin_notice() {
 			            $('#download-div').html("<p><img src='<?php echo plugin_dir_url( __FILE__ ) . 'assets/resources/spinner.gif';?>' alt='Please Wait...'/></p><p>Please wait while the Geolite database files download. Typically takes 10-15 seconds.</p>");
 			        }
 			    );
-			});
+			} );
 			</script>
 			<?php echo
 			'<div class="notice notice-warning is-dismissible" id="download-div"><p>Important: The CSMI plugin uses Maxmind Geolite databases for better speed and accuracy. Click "Download" to install these files now.</p>
@@ -153,9 +153,9 @@ class Country_Specific_Menu_Items {
 
 	function csmi_load_admin_script() {
 		// Deregister and dequeue other potentially conflicting stylesheets
-	    wp_dequeue_style( 'chosencss' );
-	    wp_deregister_style( 'chosencss' );
-    	// Add stylesheets and javascript
+		wp_dequeue_style( 'chosencss' );
+		wp_deregister_style( 'chosencss' );
+		// Add stylesheets and javascript
 		wp_register_style( 'chosencss', plugins_url( 'assets/resources/chosen.min.css', __FILE__ ), true, '', 'all' );
 		wp_register_script( 'chosenjs', plugins_url( 'assets/resources/chosen.jquery.min.js', __FILE__ ), array( 'jquery' ), '', true );
 		wp_enqueue_style( 'chosencss' );
@@ -177,7 +177,7 @@ class Country_Specific_Menu_Items {
 					<script type="text/javascript">
 					    jQuery(document).ready(function($) { 
 					        $(".chzn-select").chosen();
-					    });
+					    } );
 					</script>
 					<select name="menu-item-visibility[<?php echo $item_id; ?>][]" id="edit-menu-item-visibility-<?php echo $item_id; ?>" class="chzn-select" multiple="true">
 					<?php
